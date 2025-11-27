@@ -33,7 +33,7 @@
 这是一个 MCP 服务器，用于访问 Walmart Scraper4 API。
 
 - **PyPI 包名**: `bach-walmart_scraper4`
-- **版本**: 1.0.0
+- **版本**: 2.0.0
 - **传输协议**: stdio
 
 
@@ -184,4 +184,4 @@ This API endpoint scrapes top products in a given category. It takes URL as para
 
 此服务器由 [API-to-MCP](https://github.com/BACH-AI-Tools/api-to-mcp) 工具自动生成。
 
-版本: 1.0.0
+版本: 2.0.0

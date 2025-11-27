@@ -1,0 +1,113 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Walmart Scraper4",
+    "version": "1.0.0",
+    "description": "RapidAPI: basitmakine/walmart-scraper4"
+  },
+  "servers": [
+    {
+      "url": "https://walmart-scraper4.p.rapidapi.com"
+    }
+  ],
+  "paths": {
+    "/api/ecommerce/walmart-scraper/products": {
+      "post": {
+        "summary": "Get Product Data from URL",
+        "description": "This API endpoint is used to collect product information from a URL",
+        "operationId": "get_product_data_from_url",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/monitor-status": {
+      "get": {
+        "summary": "Monitor Status",
+        "description": "Some scraping data may take longer than average. If that's the case, you'll get a task_id. Use it to retrieve your data when it's complete.",
+        "operationId": "monitor_status",
+        "parameters": [
+          {
+            "name": "task_id",
+            "in": "query",
+            "required": true,
+            "description": "Example value: s_m195ovji14wesgd4u1",
+            "schema": {
+              "type": "string",
+              "default": null,
+              "enum": null
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ecommerce/walmart-scraper/products-by-keyword": {
+      "post": {
+        "summary": "Discover Top Products in a Category by Keyword",
+        "description": "This endpoint if for discovering top products from a given category keyword.",
+        "operationId": "discover_top_products_in_a_category_by_keyword",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ecommerce/walmart-scraper/category-products": {
+      "post": {
+        "summary": "Discover Top Products in a Category",
+        "description": "This API endpoint scrapes top products in a given category. It takes URL as parameter.",
+        "operationId": "discover_top_products_in_a_category",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "ApiAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-RapidAPI-Key"
+      }
+    }
+  },
+  "security": [
+    {
+      "ApiAuth": []
+    }
+  ]
+}

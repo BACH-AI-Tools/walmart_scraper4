@@ -1,13 +1,14 @@
 """
 Walmart Scraper4 MCP Server
 
-使用 FastMCP 的 from_openapi 方法自动生成
+MCP server for accessing API.
 
 Version: 1.0.0
 Transport: stdio
 """
 import os
 import json
+from pathlib import Path
 import httpx
 from fastmcp import FastMCP
 
@@ -22,8 +23,12 @@ API_KEY = os.getenv("API_KEY", "")
 TRANSPORT = "stdio"
 
 
-# OpenAPI 规范
-OPENAPI_SPEC = """{\n  \"openapi\": \"3.0.0\",\n  \"info\": {\n    \"title\": \"Walmart Scraper4\",\n    \"version\": \"1.0.0\",\n    \"description\": \"RapidAPI: basitmakine/walmart-scraper4\"\n  },\n  \"servers\": [\n    {\n      \"url\": \"https://walmart-scraper4.p.rapidapi.com\"\n    }\n  ],\n  \"paths\": {\n    \"/api/ecommerce/walmart-scraper/products\": {\n      \"post\": {\n        \"summary\": \"Get Product Data from URL\",\n        \"description\": \"This API endpoint is used to collect product information from a URL\",\n        \"operationId\": \"get_product_data_from_url\",\n        \"parameters\": [],\n        \"responses\": {\n          \"200\": {\n            \"description\": \"Successful response\",\n            \"content\": {\n              \"application/json\": {\n                \"schema\": {}\n              }\n            }\n          }\n        }\n      }\n    },\n    \"/api/monitor-status\": {\n      \"get\": {\n        \"summary\": \"Monitor Status\",\n        \"description\": \"Some scraping data may take longer than average. If that's the case, you'll get a task_id. Use it to retrieve your data when it's complete.\",\n        \"operationId\": \"monitor_status\",\n        \"parameters\": [\n          {\n            \"name\": \"task_id\",\n            \"in\": \"query\",\n            \"required\": true,\n            \"description\": \"Example value: s_m195ovji14wesgd4u1\",\n            \"schema\": {\n              \"type\": \"string\",\n              \"default\": null,\n              \"enum\": null\n            }\n          }\n        ],\n        \"responses\": {\n          \"200\": {\n            \"description\": \"Successful response\",\n            \"content\": {\n              \"application/json\": {\n                \"schema\": {}\n              }\n            }\n          }\n        }\n      }\n    },\n    \"/api/ecommerce/walmart-scraper/products-by-keyword\": {\n      \"post\": {\n        \"summary\": \"Discover Top Products in a Category by Keyword\",\n        \"description\": \"This endpoint if for discovering top products from a given category keyword.\",\n        \"operationId\": \"discover_top_products_in_a_category_by_keyword\",\n        \"parameters\": [],\n        \"responses\": {\n          \"200\": {\n            \"description\": \"Successful response\",\n            \"content\": {\n              \"application/json\": {\n                \"schema\": {}\n              }\n            }\n          }\n        }\n      }\n    },\n    \"/api/ecommerce/walmart-scraper/category-products\": {\n      \"post\": {\n        \"summary\": \"Discover Top Products in a Category\",\n        \"description\": \"This API endpoint scrapes top products in a given category. It takes URL as parameter.\",\n        \"operationId\": \"discover_top_products_in_a_category\",\n        \"parameters\": [],\n        \"responses\": {\n          \"200\": {\n            \"description\": \"Successful response\",\n            \"content\": {\n              \"application/json\": {\n                \"schema\": {}\n              }\n            }\n          }\n        }\n      }\n    }\n  },\n  \"components\": {\n    \"securitySchemes\": {\n      \"ApiAuth\": {\n        \"type\": \"apiKey\",\n        \"in\": \"header\",\n        \"name\": \"X-RapidAPI-Key\"\n      }\n    }\n  },\n  \"security\": [\n    {\n      \"ApiAuth\": []\n    }\n  ]\n}"""
+# 从文件加载 OpenAPI 规范
+def load_openapi_spec():
+    """从 openapi.json 文件加载 OpenAPI 规范"""
+    openapi_path = Path(__file__).parent / "openapi.json"
+    with open(openapi_path, "r", encoding="utf-8") as f:
+        return json.load(f)
 
 # 创建 HTTP 客户端
 # 设置默认 headers
@@ -52,7 +57,7 @@ client = httpx.AsyncClient(
 
 
 # 从 OpenAPI 规范创建 FastMCP 服务器
-openapi_dict = json.loads(OPENAPI_SPEC)
+openapi_dict = load_openapi_spec()
 mcp = FastMCP.from_openapi(
     openapi_spec=openapi_dict,
     client=client,

@@ -30,7 +30,7 @@ Visit **[EMCP Platform](https://sit-emcp.kaleido.guru)** now to start your MCP j
 
 ## Introduction
 
-This is an automatically generated MCP server using [FastMCP](https://fastmcp.wiki) for accessing the Walmart Scraper4 API.
+This is an MCP server for accessing the Walmart Scraper4 API.
 
 - **PyPI Package**: `bach-walmart_scraper4`
 - **Version**: 1.0.0
@@ -107,8 +107,8 @@ export API_KEY="your_api_key_here"
 {
   "mcpServers": {
     "walmart_scraper4": {
-      "command": "python",
-      "args": ["E:\path\to\walmart_scraper4\server.py"],
+      "command": "uvx",
+      "args": ["--from", "bach-walmart_scraper4", "bach_walmart_scraper4"],
       "env": {
         "API_KEY": "your_api_key_here"
       }
